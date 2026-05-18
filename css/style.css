@@ -76,7 +76,7 @@ nav#navbar.shadow {
 
 /* Logo */
 .nav-logo img {
-  height: 68px;
+  height: 48px;
   width: auto;
   display: block;
   transition: transform 0.3s ease, filter 0.3s ease;
