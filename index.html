@@ -3,372 +3,422 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSM Piano Studio — Home</title>
+  <title>RSM Piano Studio — Private Piano Lessons, Bay Area</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* PAGE-SPECIFIC */
+
+    /* ── HERO ─────────────────────────────────────── */
     .hero {
       position: relative;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 clamp(24px,5vw,80px) 12vh;
+      align-items: flex-end;
       overflow: hidden;
     }
 
-    .hero-bg {
+    .hero-image {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 55% 65% at 75% 35%, rgba(142,175,212,0.06) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 40% at 20% 75%, rgba(26,34,54,0.8) 0%, transparent 60%),
-        linear-gradient(160deg, var(--black2) 0%, var(--black) 55%, var(--black2) 100%);
       z-index: 0;
     }
 
-    /* Subtle piano texture in bg */
-    .hero-bg::after {
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+
+    .hero-image::after {
       content: '';
       position: absolute;
       inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          90deg,
-          rgba(240,237,230,0.012) 0px,
-          rgba(240,237,230,0.012) 1px,
-          transparent 1px,
-          transparent 44px
-        );
-      pointer-events: none;
+      background: linear-gradient(
+        to right,
+        rgba(20,12,4,0.82) 0%,
+        rgba(20,12,4,0.55) 50%,
+        rgba(20,12,4,0.15) 100%
+      );
+    }
+
+    /* Warm gold vignette bottom */
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(20,12,4,0.7), transparent);
+      z-index: 1;
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 820px;
+      padding: clamp(110px,16vh,180px) clamp(24px,5vw,80px) clamp(70px,10vh,120px);
+      max-width: 760px;
     }
 
-    .hero-eyebrow {
-      display: flex;
+    .hero-tag {
+      display: inline-flex;
       align-items: center;
-      gap: 16px;
-      font-size: 0.62rem;
-      letter-spacing: 0.38em;
+      gap: 12px;
+      font-size: 0.65rem;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: rgba(142,175,212,0.6);
-      margin-bottom: 2.2rem;
+      color: var(--gold-light);
+      margin-bottom: 2rem;
     }
-
-    .hero-eyebrow::before {
-      content: '';
-      width: 36px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.5;
-    }
+    .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold-light); }
 
     .hero-title {
-      margin-bottom: 2.2rem;
+      color: var(--cream);
+      margin-bottom: 1.8rem;
     }
+    .hero-title em { color: var(--gold-light); }
 
-    .hero-title .line-1 { display: block; }
-    .hero-title .line-2 {
-      display: block;
-      padding-left: clamp(2rem, 8vw, 7rem);
+    .hero-sub {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
       font-style: italic;
-      color: var(--silver);
-    }
-    .hero-title .line-3 { display: block; }
-
-    .hero-desc {
-      font-size: clamp(0.85rem, 1.4vw, 0.98rem);
-      font-weight: 300;
-      line-height: 1.95;
-      color: rgba(240,237,230,0.42);
-      max-width: 420px;
-      margin-bottom: 3rem;
+      line-height: 1.85;
+      color: rgba(250,247,240,0.7);
+      max-width: 500px;
+      margin-bottom: 2.5rem;
     }
 
-    .hero-ctas {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Floating notes in hero */
+    .hero-notes {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hero-notes .note-float {
+      position: absolute;
+      font-size: clamp(1.6rem, 3vw, 2.8rem);
     }
 
     .hero-scroll {
       position: absolute;
+      bottom: 36px;
       right: clamp(24px,5vw,80px);
-      bottom: 10vh;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      z-index: 2;
-      color: rgba(240,237,230,0.2);
+      opacity: 0.5;
+    }
+    .scroll-word {
       font-size: 0.55rem;
       letter-spacing: 0.35em;
       text-transform: uppercase;
+      color: var(--cream);
       writing-mode: vertical-rl;
     }
-
-    .scroll-bar {
+    .scroll-line {
       width: 1px;
-      height: 70px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2.2s ease-in-out infinite;
+      height: 56px;
+      background: linear-gradient(to bottom, var(--gold-light), transparent);
+      animation: scrollPulse 2.5s ease-in-out infinite;
     }
-
     @keyframes scrollPulse {
-      0%, 100% { opacity: 0.25; transform: scaleY(0.6); transform-origin: top; }
-      50%       { opacity: 0.7;  transform: scaleY(1);   transform-origin: top; }
+      0%,100% { transform: scaleY(0.5); opacity: 0.4; transform-origin: top; }
+      50%      { transform: scaleY(1);   opacity: 1;   transform-origin: top; }
     }
 
-    /* Piano keys bottom decoration */
-    .hero-keys-bar {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 80px;
-      display: flex;
-      align-items: flex-start;
-      z-index: 1;
-      opacity: 0.06;
-      pointer-events: none;
+    /* ── INTRO STRIP ─────────────────────────────── */
+    .intro-strip {
+      background: var(--white);
+      padding: clamp(60px,8vh,100px) 0;
+    }
+    .intro-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 clamp(24px,5vw,60px);
+      text-align: center;
+    }
+    .intro-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--warm-dark);
+    }
+    .intro-quote em { color: var(--gold); font-style: normal; }
+    .intro-attr {
+      margin-top: 1.2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--warm-mute);
     }
 
-    .hkb-white {
-      flex: 1;
-      height: 80px;
-      border-right: 1px solid rgba(240,237,230,0.15);
-      background: var(--ivory);
-      min-width: 0;
-    }
-
-    /* FEATURE GRID */
-    .feature-grid {
+    /* ── ABOUT SPLIT ─────────────────────────────── */
+    .about-split {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1px;
-      background: rgba(142,175,212,0.06);
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+      align-items: center;
     }
 
-    .feature-card {
-      background: var(--black);
-      padding: 52px 40px;
+    .about-img-col {
       position: relative;
+      height: 70vh;
+      min-height: 500px;
       overflow: hidden;
-      transition: background 0.4s ease;
     }
+    .about-img-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .about-img-col:hover img { transform: scale(1.05); }
 
-    .feature-card::before {
+    /* Gold frame overlay */
+    .about-img-col::after {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 0% 100%, rgba(142,175,212,0.06), transparent);
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      top: 28px; left: 28px;
+      right: -28px; bottom: -28px;
+      border: 1.5px solid var(--gold-pale);
+      border-radius: var(--radius-sm);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .feature-card:hover { background: var(--black2); }
-    .feature-card:hover::before { opacity: 1; }
+    .about-text-col {
+      padding: clamp(48px,7vw,100px) clamp(32px,5vw,80px);
+      background: var(--cream);
+    }
 
-    .fc-num {
+    /* ── HOW IT WORKS ─────────────────────────────── */
+    .how-section { background: var(--cream2); }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .how-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 40px 32px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+    .how-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-pale));
+      transform: scaleX(0);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+      transform-origin: left;
+    }
+    .how-card:hover::before { transform: scaleX(1); }
+    .how-num {
       font-family: 'Playfair Display', serif;
       font-size: 3.5rem;
       font-weight: 400;
-      color: rgba(142,175,212,0.09);
+      font-style: italic;
+      color: var(--gold-pale);
       line-height: 1;
-      margin-bottom: 1.2rem;
-      font-style: italic;
+      margin-bottom: 16px;
     }
-
-    .fc-title {
+    .how-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 400;
-      color: var(--ivory2);
-      margin-bottom: 0.9rem;
-    }
-
-    .fc-text {
-      font-size: 0.8rem;
-      line-height: 1.85;
-      color: rgba(240,237,230,0.38);
-    }
-
-    /* QUOTE */
-    .quote-section {
-      background: var(--black2);
-      text-align: center;
-      padding: clamp(80px,12vh,160px) clamp(32px,8vw,130px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quote-section::before {
-      content: '"';
-      position: absolute;
-      top: -60px; left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Playfair Display', serif;
-      font-size: 28rem;
-      font-weight: 400;
-      color: rgba(142,175,212,0.025);
-      pointer-events: none;
-      line-height: 1;
-    }
-
-    .quote-text {
-      font-family: 'Cormorant', serif;
-      font-size: clamp(1.5rem, 3.5vw, 3rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.5;
-      color: rgba(240,237,230,0.8);
-      max-width: 820px;
-      margin: 0 auto 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .quote-text em {
-      font-style: normal;
-      color: var(--silver);
-      font-weight: 400;
-    }
-
-    .quote-attr {
-      font-size: 0.6rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: rgba(240,237,230,0.25);
-    }
-
-    /* PROGRAMS PREVIEW */
-    .programs-preview {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .prog-card {
-      background: var(--black2);
-      border: 1px solid rgba(142,175,212,0.07);
-      border-radius: 2px;
-      padding: 40px 32px;
-      position: relative;
-      overflow: hidden;
-      cursor: none;
-      transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    .prog-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--accent), transparent);
-      transform: scaleX(0);
-      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    .prog-card:hover { border-color: rgba(142,175,212,0.18); transform: translateY(-4px); }
-    .prog-card:hover::after { transform: scaleX(1); }
-
-    .pc-icon {
-      font-family: 'Cormorant', serif;
-      font-size: 2.2rem;
-      color: rgba(142,175,212,0.25);
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    .pc-level {
-      font-size: 0.58rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent);
+      color: var(--warm-dark);
       margin-bottom: 10px;
     }
-
-    .pc-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 400;
-      color: var(--ivory2);
-      margin-bottom: 12px;
-    }
-
-    .pc-text {
-      font-size: 0.78rem;
+    .how-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
       line-height: 1.8;
-      color: rgba(240,237,230,0.38);
+      color: var(--warm-soft);
     }
 
-    /* SECTION SPLIT */
-    .split-section {
+    /* ── PHOTO BAND ───────────────────────────────── */
+    .photo-band {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      min-height: 60vh;
-      align-items: stretch;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      height: clamp(260px,35vw,480px);
+      overflow: hidden;
     }
-
-    .split-text {
-      padding: clamp(60px,9vh,120px) clamp(32px,5vw,80px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .split-visual {
-      background: var(--black2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .pb-item {
       position: relative;
       overflow: hidden;
     }
-
-    .split-visual-inner {
-      font-family: 'Cormorant', serif;
-      font-size: clamp(6rem, 14vw, 14rem);
-      font-weight: 300;
-      font-style: italic;
-      color: rgba(142,175,212,0.07);
-      text-align: center;
-      user-select: none;
-      line-height: 1;
+    .pb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
     }
-
-    .split-visual::before {
+    .pb-item:hover img { transform: scale(1.07); }
+    .pb-item::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(
-        180deg,
-        rgba(240,237,230,0.012) 0px, rgba(240,237,230,0.012) 1px,
-        transparent 1px, transparent 36px
-      );
+      background: rgba(42,31,14,0.15);
+      transition: background 0.4s ease;
+    }
+    .pb-item:hover::after { background: rgba(42,31,14,0.05); }
+
+    /* ── PROGRAMS PREVIEW ────────────────────────── */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+      gap: 24px;
+      margin-top: 56px;
     }
 
-    @media (max-width: 800px) {
-      .split-section { grid-template-columns: 1fr; }
-      .split-visual { min-height: 280px; }
+    .prog-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .prog-card-img {
+      height: 220px;
+      overflow: hidden;
+    }
+    .prog-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .prog-card:hover .prog-card-img img { transform: scale(1.07); }
+
+    .prog-card-body { padding: 28px 28px 32px; }
+    .prog-level {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .prog-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--warm-dark);
+      margin-bottom: 10px;
+    }
+    .prog-desc {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: var(--warm-soft);
+      margin-bottom: 20px;
+    }
+    .prog-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--warm-dark);
+    }
+    .prog-price span {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-mute);
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+
+    /* ── REVIEWS ──────────────────────────────────── */
+    .reviews-section { background: var(--cream2); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 24px;
+      margin-top: 52px;
+    }
+
+    /* ── CTA BAND ─────────────────────────────────── */
+    .cta-band {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: clamp(80px,12vh,160px) clamp(24px,5vw,60px);
+    }
+    .cta-band-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .cta-band-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 60%;
+    }
+    .cta-band-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(42,31,14,0.75);
+    }
+    .cta-band-content {
+      position: relative;
+      z-index: 1;
+    }
+    .cta-band-content .subhead { color: var(--gold-light); }
+    .cta-band-content .headline { color: var(--cream); margin-bottom: 1rem; }
+    .cta-band-content .headline em { color: var(--gold-light); }
+    .cta-band-content p {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: rgba(250,247,240,0.65);
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+    }
+
+    @media (max-width: 860px) {
+      .about-split { grid-template-columns: 1fr; }
+      .about-img-col { height: 55vw; min-height: 280px; }
+      .about-img-col::after { display: none; }
+      .photo-band { grid-template-columns: 1fr 1fr; }
+      .photo-band .pb-item:last-child { display: none; }
+    }
+    @media (max-width: 540px) {
+      .photo-band { grid-template-columns: 1fr; height: auto; }
+      .pb-item { height: 55vw; }
+      .photo-band .pb-item:last-child { display: block; }
     }
   </style>
 </head>
 <body>
 
-<!-- CURSOR -->
-<div id="cursor-key"></div>
-<div id="cursor-ripple"></div>
+<!-- Cursor trail canvas -->
+<canvas id="trail-canvas"></canvas>
 
-<!-- WAVE -->
-<canvas id="wave-canvas"></canvas>
+<!-- Backdrop for mobile menu -->
+<div class="menu-backdrop" id="menu-backdrop"></div>
 
-<!-- NAV -->
+<!-- ══ NAV ══════════════════════════════════════ -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">
     <img src="assets/logo.png" alt="RSM Piano Studio">
@@ -377,205 +427,353 @@
     <a class="nav-link" href="index.html">Home</a>
     <a class="nav-link" href="about.html">About</a>
     <a class="nav-link" href="lessons.html">Lessons</a>
-    <a class="nav-link" href="students.html">Students</a>
     <a class="nav-link" href="contact.html">Contact</a>
   </div>
-  <a class="nav-cta" href="contact.html">Book a Trial</a>
+  <a class="nav-book" href="contact.html">Book a Trial</a>
   <button class="hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- MOBILE MENU -->
+<!-- Mobile slide-in menu -->
 <div class="mobile-menu" id="mobile-menu">
-  <div class="mobile-divider"></div>
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
   <a href="lessons.html">Lessons</a>
-  <a href="students.html">Students</a>
   <a href="contact.html">Contact</a>
+  <a class="mobile-book" href="contact.html">Book a Trial Lesson</a>
 </div>
 
-<!-- ═══ HERO ════════════════════════════════════ -->
-<section class="hero">
-  <div class="hero-bg"></div>
+<!-- ══ HERO ═════════════════════════════════════ -->
+<section class="hero flush">
+  <div class="hero-image">
+    <img
+      src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=1800&q=85&auto=format&fit=crop"
+      alt="Piano keys"
+    >
+  </div>
 
-  <div class="hero-keys-bar">
-    <!-- 20 white keys -->
-    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
-    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
-    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
-    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
-    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
-    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
-    <div class="hkb-white"></div><div class="hkb-white"></div>
+  <!-- Floating musical notes -->
+  <div class="hero-notes hero-parallax">
+    <span class="note-float" data-depth="0.5" style="top:22%;left:62%;font-size:2.2rem;animation-delay:0s">♩</span>
+    <span class="note-float" data-depth="0.8" style="top:55%;left:72%;font-size:1.6rem;animation-delay:1.2s">♪</span>
+    <span class="note-float" data-depth="0.3" style="top:35%;left:80%;font-size:2.8rem;animation-delay:2.4s">♬</span>
+    <span class="note-float" data-depth="0.6" style="top:72%;left:58%;font-size:1.4rem;animation-delay:0.7s">𝄞</span>
+    <span class="note-float" data-depth="1.0" style="top:18%;left:88%;font-size:2rem;animation-delay:1.8s">♫</span>
   </div>
 
   <div class="hero-content">
-    <p class="hero-eyebrow reveal">Private Piano Instruction · Bay Area, California</p>
-    <h1 class="hero-title display reveal delay-1">
-      <span class="line-1">Where</span>
-      <span class="line-2">Artistry</span>
-      <span class="line-3">Begins.</span>
+    <p class="hero-tag reveal">Private Piano Instruction · Rancho Santa Margerita, CA</p>
+    <h1 class="hero-title display reveal d1">
+      Where <em>Music</em><br>Becomes <em>Yours</em>
     </h1>
-    <p class="hero-desc reveal delay-3">
-      A private studio dedicated to the transformative power of music — for the beginner discovering their first note, and the performer refining their concert voice.
+    <p class="hero-sub reveal d2">
+      A private studio for curious beginners, dedicated students, and returning adults — all guided by fourteen years of warmth, expertise, and a deep love for music.
     </p>
-    <div class="hero-ctas reveal delay-4">
-      <a class="btn-primary" href="contact.html">Begin Your Journey</a>
-      <a class="btn-ghost" href="lessons.html">Explore Programs</a>
+    <div class="hero-btns reveal d3">
+      <a class="btn btn-gold" href="contact.html">Book a Free Trial</a>
+      <a class="btn btn-outline" href="lessons.html" style="color:#f5f0e3;border-color:rgba(245,240,227,0.5)">Explore Lessons</a>
     </div>
   </div>
 
   <div class="hero-scroll">
-    <div class="scroll-bar"></div>
-    Scroll
+    <div class="scroll-line"></div>
+    <span class="scroll-word">Scroll</span>
   </div>
 </section>
 
-<!-- ═══ STATS ════════════════════════════════════ -->
-<div class="stats-row">
-  <div class="stat-item reveal"><div class="stat-num">14+</div><div class="stat-label">Years Teaching</div></div>
-  <div class="stat-item reveal delay-1"><div class="stat-num">300+</div><div class="stat-label">Students Guided</div></div>
-  <div class="stat-item reveal delay-2"><div class="stat-num">48</div><div class="stat-label">Competition Awards</div></div>
-  <div class="stat-item reveal delay-3"><div class="stat-num">6</div><div class="stat-label">Conservatory Placements</div></div>
-</div>
-
-<!-- ═══ FEATURES ════════════════════════════════ -->
-<div class="feature-grid">
-  <div class="feature-card reveal">
-    <div class="fc-num">I</div>
-    <h3 class="fc-title">Personalized Mastery</h3>
-    <p class="fc-text">Every lesson is built around your unique voice, goals, and pace — never a generic curriculum off the shelf.</p>
-  </div>
-  <div class="feature-card reveal delay-1">
-    <div class="fc-num">II</div>
-    <h3 class="fc-title">Classical Foundation</h3>
-    <p class="fc-text">Rooted in the conservatory tradition, we build technique and music theory that lasts a lifetime.</p>
-  </div>
-  <div class="feature-card reveal delay-2">
-    <div class="fc-num">III</div>
-    <h3 class="fc-title">Modern Palette</h3>
-    <p class="fc-text">From Baroque counterpoint to contemporary minimalism — the full landscape of piano literature awaits.</p>
-  </div>
-  <div class="feature-card reveal delay-3">
-    <div class="fc-num">IV</div>
-    <h3 class="fc-title">Performance Ready</h3>
-    <p class="fc-text">Students perform in intimate studio recitals, regional competitions, and community concert series.</p>
+<!-- ══ INTRO QUOTE ══════════════════════════════ -->
+<div class="intro-strip">
+  <div class="intro-inner">
+    <div class="ornament reveal">
+      <div class="ornament-inner">♩</div>
+    </div>
+    <p class="intro-quote reveal d1">
+      "Music is not what I teach — it is what we <em>discover together</em>, one phrase at a time."
+    </p>
+    <p class="intro-attr reveal d2">— Rachel S. Morrison, Founder &amp; Director</p>
   </div>
 </div>
 
-<!-- ═══ QUOTE ════════════════════════════════════ -->
-<div class="quote-section">
-  <p class="quote-text reveal">"Music is not what I teach — it is what we <em>discover together</em>, one phrase at a time."</p>
-  <p class="quote-attr reveal delay-2">— Rachel S. Morrison, Founder &amp; Director</p>
+<!-- ══ ABOUT PREVIEW ════════════════════════════ -->
+<div class="about-split">
+  <div class="about-img-col reveal-left">
+    <img
+      src="https://images.unsplash.com/photo-1552422535-c45813c61732?w=900&q=85&auto=format&fit=crop&crop=top"
+      alt="Hands on piano keys"
+    >
+  </div>
+  <div class="about-text-col">
+    <span class="subhead reveal">About Rachel</span>
+    <h2 class="headline reveal d1">A life devoted<br>to <em>the keys</em></h2>
+    <div class="gold-rule reveal d2"></div>
+    <p class="body-copy reveal d3">
+      Rachel S. Morrison holds degrees from the San Francisco Conservatory and the Royal College of Music in London. With over fourteen years of private teaching experience and students placed at Juilliard, NEC, and Curtis, she brings both conservatory rigour and genuine warmth to every lesson.
+    </p>
+    <p class="body-copy reveal d4" style="margin-top:1rem">
+      Whether you're five years old discovering your first melody, a teenager preparing for conservatory auditions, or an adult finally finding time to play — Rachel's studio is your home.
+    </p>
+    <div style="margin-top:2rem" class="reveal d5">
+      <a class="btn btn-outline" href="about.html">Meet Rachel</a>
+    </div>
+  </div>
 </div>
 
-<!-- ═══ PROGRAMS PREVIEW ═════════════════════════ -->
+<!-- ══ PHOTO BAND ════════════════════════════════ -->
+<div class="photo-band">
+  <div class="pb-item">
+    <img
+      src="https://images.unsplash.com/photo-1567536390869-41e9a80de897?w=900&q=80&auto=format&fit=crop"
+      alt="Grand piano"
+    >
+  </div>
+  <div class="pb-item">
+    <img
+      src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=700&q=80&auto=format&fit=crop"
+      alt="Sheet music"
+    >
+  </div>
+  <div class="pb-item">
+    <img
+      src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80&auto=format&fit=crop"
+      alt="Piano lesson"
+    >
+  </div>
+</div>
+
+<!-- ══ HOW IT WORKS ══════════════════════════════ -->
+<section class="how-section">
+  <div class="container">
+    <div style="text-align:center;max-width:560px;margin:0 auto">
+      <span class="subhead reveal">The Process</span>
+      <h2 class="headline reveal d1">Simple, personal,<br><em>joyful</em></h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-card card-3d reveal">
+        <div class="how-num">1</div>
+        <h3 class="how-title">Free Discovery Call</h3>
+        <p class="how-text">A relaxed 20-minute conversation about your goals, experience, and what you'd love to play. No pressure — just music.</p>
+      </div>
+      <div class="how-card card-3d reveal d1">
+        <div class="how-num">2</div>
+        <h3 class="how-title">Your Trial Lesson</h3>
+        <p class="how-text">A full 45-minute session where we play, explore, and design your personal musical roadmap together.</p>
+      </div>
+      <div class="how-card card-3d reveal d2">
+        <div class="how-num">3</div>
+        <h3 class="how-title">A Tailored Program</h3>
+        <p class="how-text">Your curriculum is built entirely around you — your pace, your favourite pieces, and the kind of musician you want to become.</p>
+      </div>
+      <div class="how-card card-3d reveal d3">
+        <div class="how-num">4</div>
+        <h3 class="how-title">Grow &amp; Perform</h3>
+        <p class="how-text">Regular lessons, monthly progress reflections, and invitations to studio recitals where you can share what you've made.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROGRAMS PREVIEW ══════════════════════════ -->
 <section>
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:8px">
       <div>
-        <span class="subhead">Featured Programs</span>
-        <h2 class="headline reveal">Your <em>path</em><br>starts here</h2>
+        <span class="subhead reveal">Programs</span>
+        <h2 class="headline reveal d1">Lessons for <em>every</em><br>stage of life</h2>
       </div>
-      <a class="btn-ghost reveal" href="lessons.html">All Programs →</a>
+      <a class="btn btn-outline reveal d2" href="lessons.html">All Programs →</a>
     </div>
+    <div class="programs-grid">
 
-    <div class="programs-preview">
-      <div class="prog-card reveal">
-        <div class="pc-icon">♩</div>
-        <div class="pc-level">Ages 5–10</div>
-        <h3 class="pc-title">Young Musician Foundation</h3>
-        <p class="pc-text">Curiosity-led exploration of keys, rhythm, and musical imagination.</p>
+      <div class="prog-card card-3d reveal">
+        <div class="prog-card-img">
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&q=80&auto=format&fit=crop" alt="Young student at piano">
+        </div>
+        <div class="prog-card-body">
+          <p class="prog-level">Ages 5–10</p>
+          <h3 class="prog-title">Young Musician Foundation</h3>
+          <p class="prog-desc">Play-based exploration of melody, rhythm, and the joy of music. The perfect first step.</p>
+          <div class="prog-price">$140 <span>/ 45 min</span></div>
+        </div>
       </div>
-      <div class="prog-card reveal delay-1">
-        <div class="pc-icon">♪</div>
-        <div class="pc-level">Ages 10–18</div>
-        <h3 class="pc-title">Classical Technique Studio</h3>
-        <p class="pc-text">Rigorous technique, theory, and repertoire for the committed student.</p>
+
+      <div class="prog-card card-3d reveal d1">
+        <div class="prog-card-img">
+          <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&q=80&auto=format&fit=crop" alt="Teen practicing piano">
+        </div>
+        <div class="prog-card-body">
+          <p class="prog-level">Ages 10–18</p>
+          <h3 class="prog-title">Classical Technique Studio</h3>
+          <p class="prog-desc">Rigorous technique and a rich repertoire for students serious about growing their craft.</p>
+          <div class="prog-price">$165 <span>/ 60 min</span></div>
+        </div>
       </div>
-      <div class="prog-card reveal delay-2">
-        <div class="pc-icon">♬</div>
-        <div class="pc-level">Advanced</div>
-        <h3 class="pc-title">Performance Mentorship</h3>
-        <p class="pc-text">Deep score study and stage presence for the conservatory-bound performer.</p>
+
+      <div class="prog-card card-3d reveal d2">
+        <div class="prog-card-img">
+          <img src="https://images.unsplash.com/photo-1461784121038-f088ca1e7714?w=600&q=80&auto=format&fit=crop" alt="Adult playing piano">
+        </div>
+        <div class="prog-card-body">
+          <p class="prog-level">Adults · All Levels</p>
+          <h3 class="prog-title">Adult Rediscovery</h3>
+          <p class="prog-desc">Begin for the first time, or return after years away. No pressure — only the joy of music, on your terms.</p>
+          <div class="prog-price">$150 <span>/ 60 min</span></div>
+        </div>
       </div>
-      <div class="prog-card reveal delay-3">
-        <div class="pc-icon">𝄞</div>
-        <div class="pc-level">Adults</div>
-        <h3 class="pc-title">Adult Rediscovery</h3>
-        <p class="pc-text">Return to music — or begin for the first time — at your own meaningful pace.</p>
-      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ═══ SPLIT SECTION ════════════════════════════ -->
-<div class="split-section">
-  <div class="split-visual">
-    <div class="split-visual-inner">RSM</div>
-  </div>
-  <div class="split-text">
-    <span class="subhead">The Studio</span>
-    <h2 class="headline reveal"><em>Excellence</em><br>in every lesson</h2>
-    <div class="line-divider reveal delay-1"></div>
-    <p class="body-text reveal delay-2" style="max-width:420px">
-      RSM Piano Studio was founded on the belief that great teaching is a living art. Rachel S. Morrison brings over fourteen years of private instruction experience — shaped by conservatory training in San Francisco and London — to every single session.
-    </p>
-    <div style="margin-top:2rem" class="reveal delay-3">
-      <a class="btn-text" href="about.html"><span class="btn-line"></span>About Rachel</a>
+<!-- ══ STATS ════════════════════════════════════ -->
+<div class="stat-band">
+  <div class="stat-grid">
+    <div class="reveal">
+      <div class="stat-num">14+</div>
+      <div class="stat-label">Years Teaching</div>
+    </div>
+    <div class="reveal d1">
+      <div class="stat-num">300+</div>
+      <div class="stat-label">Students Guided</div>
+    </div>
+    <div class="reveal d2">
+      <div class="stat-num">48</div>
+      <div class="stat-label">Competition Awards</div>
+    </div>
+    <div class="reveal d3">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Conservatory Placements</div>
     </div>
   </div>
 </div>
 
-<!-- ═══ PIANO KEYS DIVIDER ════════════════════════ -->
-<div class="keys-divider">
-  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
-  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
-  <div class="key-b"></div><div class="key-w"></div><div class="key-w"></div>
-  <div class="key-b"></div><div class="key-w"></div><div class="key-b"></div>
-  <div class="key-w"></div><div class="key-w"></div><div class="key-b"></div>
-  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
-  <div class="key-b"></div><div class="key-w"></div><div class="key-w"></div>
-  <div class="key-b"></div><div class="key-w"></div><div class="key-b"></div>
-  <div class="key-w"></div><div class="key-w"></div><div class="key-b"></div>
-  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
-  <div class="key-b"></div><div class="key-w"></div>
-</div>
+<!-- ══ REVIEWS ═══════════════════════════════════ -->
+<section class="reviews-section">
+  <div class="container">
+    <div style="text-align:center;max-width:520px;margin:0 auto">
+      <span class="subhead reveal">What Students Say</span>
+      <h2 class="headline reveal d1">Words from<br><em>the studio</em></h2>
+    </div>
+    <div class="reviews-grid">
 
-<!-- ═══ CTA STRIP ════════════════════════════════ -->
-<section style="text-align:center;background:var(--black2);padding:clamp(80px,11vh,140px) clamp(24px,5vw,80px)">
-  <span class="subhead">Ready to Begin?</span>
-  <h2 class="headline reveal"><em>One note</em><br>changes everything</h2>
-  <p class="body-text reveal delay-1" style="max-width:380px;margin:1.5rem auto;text-align:center;">
-    Book a complimentary discovery call. No obligation — just a conversation about your musical life.
-  </p>
-  <div style="margin-top:2.5rem" class="reveal delay-2">
-    <a class="btn-primary" href="contact.html">Schedule a Trial Lesson</a>
+      <div class="review-card reveal">
+        <div class="review-open-quote">"</div>
+        <div class="review-stars">
+          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
+        </div>
+        <p class="review-quote">"Rachel didn't just teach me piano — she taught me to listen. Three years later I performed a Schubert Impromptu at the studio recital. I still can't believe that's me."</p>
+        <div class="review-author">
+          <span class="review-name">Margaret K.</span>&ensp;·&ensp; Adult Rediscovery Student
+        </div>
+      </div>
+
+      <div class="review-card reveal d1">
+        <div class="review-open-quote">"</div>
+        <div class="review-stars">
+          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
+        </div>
+        <p class="review-quote">"My daughter started at age six with no experience. At nine she placed first in the Bay Area Young Musicians Competition. Rachel's patience and artistry are extraordinary."</p>
+        <div class="review-author">
+          <span class="review-name">Jennifer L.</span>&ensp;·&ensp; Parent, Young Musician Program
+        </div>
+      </div>
+
+      <div class="review-card reveal d2">
+        <div class="review-open-quote">"</div>
+        <div class="review-stars">
+          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
+        </div>
+        <p class="review-quote">"I auditioned for three conservatories after working with Rachel. I was accepted to all three. She believed in me before I believed in myself."</p>
+        <div class="review-author">
+          <span class="review-name">Daniel R.</span>&ensp;·&ensp; Performance Mentorship · Now at NEC
+        </div>
+      </div>
+
+      <div class="review-card reveal d1">
+        <div class="review-open-quote">"</div>
+        <div class="review-stars">
+          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
+        </div>
+        <p class="review-quote">"As a 48-year-old picking up piano for the first time, I was terrified. Rachel made every lesson feel like I was finally home. I play every single day now."</p>
+        <div class="review-author">
+          <span class="review-name">Thomas B.</span>&ensp;·&ensp; Adult Beginner
+        </div>
+      </div>
+
+      <div class="review-card reveal d2">
+        <div class="review-open-quote">"</div>
+        <div class="review-stars">
+          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
+        </div>
+        <p class="review-quote">"I was stuck at an intermediate plateau for years. Six months with Rachel and I finally broke through. Her ear for what's missing in a performance is genuinely uncanny."</p>
+        <div class="review-author">
+          <span class="review-name">Priya N.</span>&ensp;·&ensp; Classical Technique Studio
+        </div>
+      </div>
+
+      <div class="review-card reveal d3">
+        <div class="review-open-quote">"</div>
+        <div class="review-stars">
+          <span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span><span class="review-star">★</span>
+        </div>
+        <p class="review-quote">"Every lesson is intellectually stimulating and deeply musical. She doesn't just teach notes — she teaches you to think like a composer. Truly one of a kind."</p>
+        <div class="review-author">
+          <span class="review-name">Clara M.</span>&ensp;·&ensp; Summer Intensive Alumni
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ════════════════════════════════════ -->
+<!-- ══ CTA BAND ══════════════════════════════════ -->
+<div class="cta-band">
+  <div class="cta-band-bg">
+    <img
+      src="https://images.unsplash.com/photo-1585891685952-b30b6c4a03e3?w=1600&q=80&auto=format&fit=crop&crop=center"
+      alt="Piano close up"
+    >
+  </div>
+  <div class="cta-band-content">
+    <span class="subhead reveal">Begin Today</span>
+    <h2 class="headline reveal d1">Your first lesson<br>is <em>on us</em></h2>
+    <p class="reveal d2">Book a complimentary trial lesson — no commitment, just music. Let's find out what you're capable of.</p>
+    <div class="reveal d3">
+      <a class="btn btn-gold" href="contact.html">Claim Your Free Trial</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
 <footer>
-  <div class="footer-inner">
+  <div class="footer-grid">
     <div class="footer-logo">
-      <a href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+  <a href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+      <p class="footer-tagline">"Where every student finds their musical voice."</p>
     </div>
-    <nav class="footer-nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="lessons.html">Lessons</a>
-      <a href="students.html">Students</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+    <div>
+      <p class="footer-heading">Navigate</p>
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Rachel</a>
+        <a href="lessons.html">Lessons &amp; Programs</a>
+        <a href="contact.html">Contact &amp; Booking</a>
+      </nav>
+    </div>
     <div class="footer-contact">
-      hello@rsmstudio.com<br>
-      San Francisco Bay Area, CA<br>
-      Mon – Sat · Morning &amp; Evening
+      <p class="footer-heading">Studio</p>
+      <p>
+        Rancho Santa Margerita, CA<br>
+        <a href="mailto:hello@rsmstudio.com">rsmpianostudio@gmail.com</a><br>
+        Mon – Sat · Morning &amp; Evening<br>
+        <em style="font-size:0.82rem;font-style:italic;color:rgba(250,247,240,0.3)">Free 20-min discovery call included</em>
+      </p>
     </div>
   </div>
-  <p class="footer-copy">© 2025 RSM Piano Studio · All rights reserved · Crafted with care</p>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 RSM Piano Studio · All rights reserved</p>
+    <p class="footer-copy" style="font-style:italic">Private instruction with heart</p>
+  </div>
 </footer>
 
 <script src="js/main.js"></script>

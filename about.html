@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSM Piano Studio — About Rachel</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero {
+      padding-top: clamp(100px,14vh,160px);
+      background: var(--white);
+      overflow: hidden;
+    }
+
+    .page-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(48px,7vh,80px) clamp(24px,5vw,60px) 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px,6vw,100px);
+      align-items: end;
+    }
+
+    .about-image-main {
+      position: relative;
+    }
+
+    .aim-frame {
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+      height: clamp(400px,55vw,650px);
+      position: relative;
+    }
+
+    .aim-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .aim-frame:hover img { transform: scale(1.04); }
+
+    /* Gold accent box */
+    .aim-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 2px solid var(--gold-pale);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Floating credential badge */
+    .aim-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--gold);
+      color: var(--white);
+      border-radius: 50%;
+      width: 110px;
+      height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(184,144,42,0.4);
+      z-index: 2;
+    }
+    .aim-badge-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 500; line-height: 1; }
+    .aim-badge-label { font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; margin-top: 3px; }
+
+    .about-text-hero { padding-bottom: clamp(40px,6vh,80px); }
+
+    /* PHILOSOPHY SECTION */
+    .philosophy-section { background: var(--cream2); }
+    .phil-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .phil-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 40px 32px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+    }
+    .phil-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+    .phil-icon {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--gold-pale);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .phil-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--warm-dark);
+      margin-bottom: 10px;
+    }
+    .phil-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--warm-soft);
+    }
+
+    /* CREDENTIALS */
+    .cred-section {}
+    .cred-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px,7vw,100px);
+      align-items: start;
+    }
+
+    .cred-image {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      height: clamp(320px,40vw,520px);
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .cred-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cred-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(42,31,14,0.5), transparent);
+    }
+    .cred-image-caption {
+      position: absolute;
+      bottom: 24px; left: 24px;
+      z-index: 1;
+      color: var(--cream);
+      font-family: 'EB Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    .cred-list { display: flex; flex-direction: column; gap: 0; }
+    .cred-item {
+      display: flex;
+      gap: 20px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--cream3);
+      align-items: flex-start;
+    }
+    .cred-item:last-child { border-bottom: none; }
+    .cred-dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-top: 8px;
+    }
+    .cred-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: var(--warm-mid);
+    }
+    .cred-text strong { color: var(--warm-dark); font-weight: 500; }
+
+    /* TIMELINE */
+    .timeline-section { background: var(--white); }
+    .timeline {
+      max-width: 680px;
+      position: relative;
+      margin-top: 56px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 14px; top: 6px; bottom: 6px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold-pale), var(--cream3));
+    }
+    .tl-item {
+      display: flex;
+      gap: 32px;
+      padding-bottom: 44px;
+      position: relative;
+    }
+    .tl-dot {
+      flex-shrink: 0;
+      width: 29px;
+      height: 29px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--gold-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .tl-dot-inner { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); }
+    .tl-item:hover .tl-dot { border-color: var(--gold); background: var(--gold-pale); }
+    .tl-right {}
+    .tl-year { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .tl-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 400; color: var(--warm-dark); margin-bottom: 6px; }
+    .tl-desc { font-family: 'EB Garamond', serif; font-size: 1rem; line-height: 1.75; color: var(--warm-soft); }
+
+    @media (max-width: 860px) {
+      .page-hero-inner { grid-template-columns: 1fr; }
+      .aim-frame { height: 55vw; min-height: 280px; border-radius: var(--radius-md); }
+      .aim-badge { width: 88px; height: 88px; bottom: -12px; right: 12px; }
+      .aim-badge-num { font-size: 1.6rem; }
+      .cred-layout { grid-template-columns: 1fr; }
+      .cred-image { height: 55vw; min-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="trail-canvas"></canvas>
+<div class="menu-backdrop" id="menu-backdrop"></div>
+
+<nav id="navbar">
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link active" href="about.html">About</a>
+    <a class="nav-link" href="lessons.html">Lessons</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </div>
+  <a class="nav-book" href="contact.html">Book a Trial</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="lessons.html">Lessons</a>
+  <a href="contact.html">Contact</a>
+  <a class="mobile-book" href="contact.html">Book a Trial Lesson</a>
+</div>
+
+<!-- ══ PAGE HERO ═════════════════════════════════ -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="about-image-main reveal-left">
+      <div class="aim-frame">
+        <img
+          src="https://images.unsplash.com/photo-1598128558393-70ff21433be0?w=900&q=85&auto=format&fit=crop&crop=top"
+          alt="Pianist at the piano"
+        >
+      </div>
+      <div class="aim-badge">
+        <span class="aim-badge-num">14+</span>
+        <span class="aim-badge-label">Years<br>Teaching</span>
+      </div>
+    </div>
+
+    <div class="about-text-hero">
+      <span class="subhead reveal">About Rachel</span>
+      <h1 class="display reveal d1">A life<br>in <em>music</em></h1>
+      <div class="gold-rule reveal d2"></div>
+      <p class="body-copy reveal d3">
+        Rachel S. Morrison has been shaping musical lives for over fourteen years — from young beginners discovering their first notes to conservatory-bound performers honing their voice. Trained at the San Francisco Conservatory and the Royal College of Music in London, Rachel brings genuine warmth, deep musicianship, and a love of teaching to every lesson.
+      </p>
+      <p class="body-copy reveal d4" style="margin-top:1rem">
+        Her students have gone on to study at Juilliard, the New England Conservatory, Curtis, and Oberlin — but the achievement she's most proud of is watching every student, at every level, find joy in playing.
+      </p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:2rem" class="reveal d5">
+        <a class="btn btn-gold" href="contact.html">Work With Rachel</a>
+        <a class="btn btn-outline" href="lessons.html">See All Programs</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PHILOSOPHY ════════════════════════════════ -->
+<section class="philosophy-section">
+  <div class="container">
+    <div style="max-width:560px">
+      <span class="subhead reveal">Philosophy</span>
+      <h2 class="headline reveal d1">Teaching as a<br><em>living art</em></h2>
+      <p class="body-copy reveal d2">These are the four beliefs that guide every single lesson at RSM Piano Studio.</p>
+    </div>
+    <div class="phil-grid">
+      <div class="phil-card card-3d reveal">
+        <span class="phil-icon">I</span>
+        <h3 class="phil-title">Technique as Freedom</h3>
+        <p class="phil-text">Proper technique is not a cage — it is the architecture that liberates. We build physical freedom so that your musical ideas can emerge without limitation.</p>
+      </div>
+      <div class="phil-card card-3d reveal d1">
+        <span class="phil-icon">II</span>
+        <h3 class="phil-title">Listening First</h3>
+        <p class="phil-text">Before playing, we listen. To the composer's intention, to the room, and to the inner voice that separates a performer from a musician.</p>
+      </div>
+      <div class="phil-card card-3d reveal d2">
+        <span class="phil-icon">III</span>
+        <h3 class="phil-title">Joy in the Journey</h3>
+        <p class="phil-text">The most important lesson in music mirrors life: the journey itself is the destination. We celebrate every discovery — first scales and final nocturnes alike.</p>
+      </div>
+      <div class="phil-card card-3d reveal d3">
+        <span class="phil-icon">IV</span>
+        <h3 class="phil-title">The Whole Person</h3>
+        <p class="phil-text">Learning piano builds focus, discipline, emotional intelligence, and confidence that extends far beyond the bench. We never lose sight of that larger gift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CREDENTIALS ════════════════════════════════ -->
+<section class="cred-section">
+  <div class="container">
+    <div class="cred-layout">
+      <div class="cred-image reveal-left">
+        <img
+          src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=800&q=85&auto=format&fit=crop"
+          alt="Piano keys detail"
+        >
+        <p class="cred-image-caption">"Music is the language of the soul."</p>
+      </div>
+      <div>
+        <span class="subhead reveal">Training &amp; Credentials</span>
+        <h2 class="headline reveal d1"><em>Formed</em> by the<br>finest traditions</h2>
+        <div class="gold-rule reveal d2"></div>
+        <div class="cred-list">
+          <div class="cred-item reveal d2">
+            <div class="cred-dot"></div>
+            <p class="cred-text"><strong>Bachelor of Music</strong> — San Francisco Conservatory of Music, Piano Performance. Graduated Summa Cum Laude.</p>
+          </div>
+          <div class="cred-item reveal d3">
+            <div class="cred-dot"></div>
+            <p class="cred-text"><strong>Advanced Performance Diploma</strong> — Royal College of Music, London. Solo and chamber performance focus.</p>
+          </div>
+          <div class="cred-item reveal d3">
+            <div class="cred-dot"></div>
+            <p class="cred-text"><strong>ABRSM Teaching Certificate</strong> — Distinction in Practical Musicianship and Pedagogy.</p>
+          </div>
+          <div class="cred-item reveal d4">
+            <div class="cred-dot"></div>
+            <p class="cred-text"><strong>Masterclasses</strong> with Emanuel Ax, Murray Perahia, and Imogen Cooper.</p>
+          </div>
+          <div class="cred-item reveal d4">
+            <div class="cred-dot"></div>
+            <p class="cred-text"><strong>Concert performances</strong> across North America and Europe as soloist and chamber musician.</p>
+          </div>
+          <div class="cred-item reveal d5">
+            <div class="cred-dot"></div>
+            <p class="cred-text"><strong>300+ students taught</strong> across all ages and levels over 14+ years of private instruction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TIMELINE ═══════════════════════════════════ -->
+<section class="timeline-section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,7vw,100px);align-items:start">
+      <div>
+        <span class="subhead reveal">Journey</span>
+        <h2 class="headline reveal d1"><em>Milestones</em><br>along the way</h2>
+        <div class="gold-rule reveal d2"></div>
+        <p class="body-copy reveal d3">Every great teacher was first a passionate student. Rachel's path has been one of continuous discovery — shaped by extraordinary mentors, transformative experiences, and an endless love for the piano.</p>
+        <div style="margin-top:2rem" class="reveal d4">
+          <a class="btn btn-gold" href="contact.html">Start Your Journey</a>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-right">
+            <p class="tl-year">2006</p>
+            <p class="tl-title">San Francisco Conservatory</p>
+            <p class="tl-desc">Began undergraduate studies in Piano Performance. Graduated Summa Cum Laude, performed senior recital to standing ovation.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal d1">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-right">
+            <p class="tl-year">2009</p>
+            <p class="tl-title">Royal College of Music, London</p>
+            <p class="tl-desc">Advanced studies at one of the world's premier conservatories. European concert tour as soloist and chamber musician.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal d2">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-right">
+            <p class="tl-year">2011</p>
+            <p class="tl-title">RSM Piano Studio Founded</p>
+            <p class="tl-desc">Opened the doors with five students and a profound belief that every person deserves beautiful music in their life.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal d3">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-right">
+            <p class="tl-year">2018</p>
+            <p class="tl-title">First Conservatory Placement</p>
+            <p class="tl-desc">Studio's first student accepted to Juilliard — a milestone that marked the depth and impact of Rachel's mentorship.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal d4">
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-right">
+            <p class="tl-year">Today</p>
+            <p class="tl-title">Growing, Always</p>
+            <p class="tl-desc">300+ students. 48 competition prizes. 6 conservatory placements. And still just as excited about every first lesson as ever.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+      <p class="footer-tagline">"Where every student finds their musical voice."</p>
+    </div>
+    <div>
+      <p class="footer-heading">Navigate</p>
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Rachel</a>
+        <a href="lessons.html">Lessons &amp; Programs</a>
+        <a href="contact.html">Contact &amp; Booking</a>
+      </nav>
+    </div>
+    <div class="footer-contact">
+      <p class="footer-heading">Studio</p>
+      <p>San Francisco Bay Area, CA<br><a href="mailto:hello@rsmstudio.com">hello@rsmstudio.com</a><br>Mon – Sat · Morning &amp; Evening</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 RSM Piano Studio · All rights reserved</p>
+    <p class="footer-copy" style="font-style:italic">Private instruction with heart</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

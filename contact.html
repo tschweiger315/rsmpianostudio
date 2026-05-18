@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSM Piano Studio — Contact &amp; Booking</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* CONTACT PAGE */
+    .contact-hero {
+      padding-top: clamp(100px,14vh,160px);
+      background: var(--white);
+    }
+
+    .contact-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(48px,7vh,80px) clamp(24px,5vw,60px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px,7vw,100px);
+      align-items: center;
+    }
+
+    /* Left side info */
+    .contact-info-img {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      height: clamp(340px,45vw,520px);
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .contact-info-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .contact-info-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(42,31,14,0.55) 0%, transparent 60%);
+    }
+
+    .contact-img-text {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 1;
+      padding: 32px;
+    }
+
+    .contact-img-quote {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: rgba(250,247,240,0.85);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .contact-img-attr {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+    }
+
+    /* Details list */
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cd-item {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--cream3);
+      align-items: flex-start;
+    }
+
+    .cd-item:first-child { padding-top: 0; }
+    .cd-item:last-child { border-bottom: none; }
+
+    .cd-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--gold-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: var(--gold);
+    }
+
+    .cd-label { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--warm-mute); margin-bottom: 4px; }
+    .cd-value { font-family: 'EB Garamond', serif; font-size: 1.05rem; color: var(--warm-dark); line-height: 1.5; }
+    .cd-value a { color: var(--gold); text-decoration: none; }
+    .cd-value a:hover { text-decoration: underline; }
+
+    /* AVAILABILITY CALENDAR */
+    .avail-section { background: var(--cream2); }
+
+    .avail-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 40px;
+    }
+
+    .avail-day {
+      background: var(--white);
+      border-radius: var(--radius-sm);
+      padding: 14px 8px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease;
+    }
+    .avail-day:hover { transform: translateY(-2px); }
+    .avail-day-name { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-mute); margin-bottom: 6px; }
+    .avail-dot { width: 8px; height: 8px; border-radius: 50%; margin: 0 auto 6px; }
+    .avail-day.open .avail-dot { background: var(--gold); }
+    .avail-day.closed .avail-dot { background: var(--cream3); }
+    .avail-slots { font-size: 0.6rem; color: var(--warm-soft); line-height: 1.5; }
+    .avail-day.closed .avail-slots { color: var(--warm-mute); }
+
+    /* FORM SECTION */
+    .form-section { background: var(--white); }
+
+    .form-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(24px,5vw,60px);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(60px,8vw,120px);
+      align-items: start;
+    }
+
+    .form-intro {}
+
+    .form-steps {
+      display: flex;
+      gap: 6px;
+      margin-top: 2rem;
+    }
+    .fs-dot {
+      height: 3px;
+      border-radius: 2px;
+      background: var(--cream3);
+      flex: 1;
+      transition: background 0.4s ease;
+    }
+    .fs-dot.active { background: var(--gold); }
+
+    .form-actual {}
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    #form-success {
+      display: none;
+      margin-top: 20px;
+      background: rgba(184,144,42,0.1);
+      border: 1.5px solid var(--gold-pale);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--warm-mid);
+    }
+
+    /* MINI REVIEW */
+    .contact-review {
+      margin-top: 48px;
+      padding: 24px;
+      background: var(--cream2);
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--gold-pale);
+    }
+    .cr-quote { font-family: 'EB Garamond', serif; font-size: 0.98rem; font-style: italic; color: var(--warm-mid); line-height: 1.7; margin-bottom: 8px; }
+    .cr-attr { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-mute); }
+
+    @media (max-width: 860px) {
+      .contact-hero-inner { grid-template-columns: 1fr; }
+      .contact-info-img { height: 50vw; min-height: 240px; }
+      .form-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .avail-grid { grid-template-columns: repeat(4,1fr); }
+    }
+    @media (max-width: 480px) {
+      .avail-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="trail-canvas"></canvas>
+<div class="menu-backdrop" id="menu-backdrop"></div>
+
+<nav id="navbar">
+  <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="lessons.html">Lessons</a>
+    <a class="nav-link active" href="contact.html">Contact</a>
+  </div>
+  <a class="nav-book" href="contact.html">Book a Trial</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="lessons.html">Lessons</a>
+  <a href="contact.html">Contact</a>
+  <a class="mobile-book" href="contact.html">Book a Trial Lesson</a>
+</div>
+
+<!-- ══ HERO / INFO ════════════════════════════════ -->
+<div class="contact-hero">
+  <div class="contact-hero-inner">
+
+    <div class="contact-info-img reveal-left">
+      <img
+        src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=85&auto=format&fit=crop"
+        alt="Piano lesson in progress"
+      >
+      <div class="contact-img-text">
+        <p class="contact-img-quote">"The first step is simply a conversation about what you'd love to play."</p>
+        <p class="contact-img-attr">— Rachel S. Morrison</p>
+      </div>
+    </div>
+
+    <div class="reveal-right">
+      <span class="subhead reveal">Get In Touch</span>
+      <h1 class="headline reveal d1">Let's start<br><em>your story</em></h1>
+      <div class="gold-rule reveal d2"></div>
+      <p class="body-copy reveal d3">
+        A complimentary 20-minute discovery call is included for all new students. It's just a warm conversation — no pressure, no obligation. Tell Rachel what you'd love to play, and she'll take it from there.
+      </p>
+
+      <div class="contact-details" style="margin-top:2rem">
+        <div class="cd-item reveal d3">
+          <div class="cd-icon">✉</div>
+          <div>
+            <p class="cd-label">Email</p>
+            <p class="cd-value"><a href="mailto:hello@rsmstudio.com">hello@rsmstudio.com</a></p>
+          </div>
+        </div>
+        <div class="cd-item reveal d4">
+          <div class="cd-icon">♩</div>
+          <div>
+            <p class="cd-label">Studio Location</p>
+            <p class="cd-value">San Francisco Bay Area, California</p>
+          </div>
+        </div>
+        <div class="cd-item reveal d4">
+          <div class="cd-icon">◷</div>
+          <div>
+            <p class="cd-label">Response Time</p>
+            <p class="cd-value">Within 24 hours, every day</p>
+          </div>
+        </div>
+        <div class="cd-item reveal d5">
+          <div class="cd-icon">★</div>
+          <div>
+            <p class="cd-label">Trial Lesson</p>
+            <p class="cd-value">Free 20-min discovery call included for all new students</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ AVAILABILITY ═══════════════════════════════ -->
+<section class="avail-section">
+  <div class="container">
+    <div style="text-align:center;max-width:520px;margin:0 auto">
+      <span class="subhead reveal">Scheduling</span>
+      <h2 class="headline reveal d1">Current <em>availability</em></h2>
+    </div>
+    <div class="avail-grid">
+      <div class="avail-day closed reveal">
+        <div class="avail-day-name">Sun</div>
+        <div class="avail-dot"></div>
+        <div class="avail-slots">Closed</div>
+      </div>
+      <div class="avail-day open reveal d1">
+        <div class="avail-day-name">Mon</div>
+        <div class="avail-dot"></div>
+        <div class="avail-slots">AM<br>PM</div>
+      </div>
+      <div class="avail-day open reveal d1">
+        <div class="avail-day-name">Tue</div>
+        <div class="avail-dot"></div>
+        <div class="avail-slots">AM<br>Eve</div>
+      </div>
+      <div class="avail-day open reveal d2">
+        <div class="avail-day-name">Wed</div>
+        <div class="avail-dot"></div>
+        <div class="avail-slots">AM only</div>
+      </div>
+      <div class="avail-day open reveal d2">
+        <div class="avail-day-name">Thu</div>
+        <div class="avail-dot"></div>
+        <div class="avail-slots">AM<br>Eve</div>
+      </div>
+      <div class="avail-day open reveal d3">
+        <div class="avail-day-name">Fri</div>
+        <div class="avail-dot"></div>
+        <div class="avail-slots">AM<br>PM</div>
+      </div>
+      <div class="avail-day open reveal d3">
+        <div class="avail-day-name">Sat</div>
+        <div class="avail-dot"></div>
+        <div class="avail-slots">AM<br>PM</div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:20px;font-size:0.75rem;color:var(--warm-mute);">
+      ♩ &nbsp;Availability subject to change · Contact Rachel to confirm your preferred slot
+    </p>
+  </div>
+</section>
+
+<!-- ══ FORM ═══════════════════════════════════════ -->
+<section class="form-section">
+  <div class="form-layout">
+
+    <div class="form-intro">
+      <span class="subhead reveal">Send a Message</span>
+      <h2 class="headline reveal d1">Tell Rachel<br>about <em>you</em></h2>
+      <div class="gold-rule reveal d2"></div>
+      <p class="body-copy reveal d3">Fill in the form and Rachel will personally reply within 24 hours with available times for your discovery call or first lesson.</p>
+
+      <div class="form-steps reveal d4" id="form-steps">
+        <div class="fs-dot active"></div>
+        <div class="fs-dot"></div>
+        <div class="fs-dot"></div>
+        <div class="fs-dot"></div>
+      </div>
+
+      <div class="contact-review reveal d5">
+        <p class="cr-quote">"The discovery call was so warm and easy. I knew immediately this was the right studio for my daughter."</p>
+        <p class="cr-attr">— Jennifer L., Parent</p>
+      </div>
+    </div>
+
+    <div class="form-actual reveal d2">
+      <form id="contact-form">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label" for="f-name">First Name</label>
+            <input class="form-input" type="text" id="f-name" placeholder="Your first name" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="f-last">Last Name</label>
+            <input class="form-input" type="text" id="f-last" placeholder="Your last name" required>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="f-email">Email Address</label>
+          <input class="form-input" type="email" id="f-email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="f-program">Which program interests you?</label>
+          <select class="form-select" id="f-program">
+            <option value="" disabled selected>Select a program</option>
+            <option>Young Musician Foundation (Ages 5–10)</option>
+            <option>Classical Technique Studio (Ages 10–18)</option>
+            <option>Performance Mentorship (Advanced)</option>
+            <option>Adult Rediscovery Program</option>
+            <option>Summer Intensive Workshop (July)</option>
+            <option>Not sure yet — I'd love to chat</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="f-level">Current experience level</label>
+          <select class="form-select" id="f-level">
+            <option value="" disabled selected>Select level</option>
+            <option>Complete beginner — never played</option>
+            <option>Some experience — beginner stage</option>
+            <option>Intermediate — several years</option>
+            <option>Advanced — many years</option>
+            <option>Returning after a long break</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="f-message">Tell Rachel a little about yourself</label>
+          <textarea class="form-textarea" id="f-message" placeholder="Your goals, what you love about music, what you'd love to play one day…"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">Send Your Message</button>
+
+        <div id="form-success">
+          ♩ &nbsp;Thank you! Rachel will personally reply within 24 hours with next steps.
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ PHOTO CTA ══════════════════════════════════ -->
+<div style="position:relative;overflow:hidden;text-align:center;padding:clamp(70px,10vh,130px) clamp(24px,5vw,60px)">
+  <div style="position:absolute;inset:0">
+    <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=1600&q=80&auto=format&fit=crop" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.25">
+    <div style="position:absolute;inset:0;background:rgba(250,247,240,0.88)"></div>
+  </div>
+  <div style="position:relative;z-index:1">
+    <div class="ornament reveal"><div class="ornament-inner">♬</div></div>
+    <h2 class="headline reveal d1">Every journey<br>begins with a <em>single note</em></h2>
+    <p class="body-copy reveal d2" style="max-width:400px;margin:1rem auto 2rem;text-align:center">Rachel personally reads every message. She looks forward to hearing from you.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+      <p class="footer-tagline">"Where every student finds their musical voice."</p>
+    </div>
+    <div>
+      <p class="footer-heading">Navigate</p>
+      <nav class="footer-links">
+        <a href="index.html">Home</a><a href="about.html">About Rachel</a>
+        <a href="lessons.html">Lessons &amp; Programs</a><a href="contact.html">Contact &amp; Booking</a>
+      </nav>
+    </div>
+    <div class="footer-contact">
+      <p class="footer-heading">Studio</p>
+      <p>San Francisco Bay Area, CA<br><a href="mailto:hello@rsmstudio.com">hello@rsmstudio.com</a><br>Mon – Sat · Morning &amp; Evening</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 RSM Piano Studio · All rights reserved</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // Animate form step dots on input focus
+  const fields = document.querySelectorAll('.form-input, .form-select, .form-textarea');
+  const dots   = document.querySelectorAll('.fs-dot');
+  fields.forEach((f, i) => {
+    f.addEventListener('focus', () => {
+      const step = Math.min(Math.floor(i / Math.max(1, fields.length / dots.length)), dots.length - 1);
+      dots.forEach((d, di) => d.classList.toggle('active', di <= step));
+    });
+  });
+</script>
+</body>
+</html>
