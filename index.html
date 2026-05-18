@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSM Piano Studio — Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* PAGE-SPECIFIC */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 clamp(24px,5vw,80px) 12vh;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 65% at 75% 35%, rgba(142,175,212,0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 20% 75%, rgba(26,34,54,0.8) 0%, transparent 60%),
+        linear-gradient(160deg, var(--black2) 0%, var(--black) 55%, var(--black2) 100%);
+      z-index: 0;
+    }
+
+    /* Subtle piano texture in bg */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          rgba(240,237,230,0.012) 0px,
+          rgba(240,237,230,0.012) 1px,
+          transparent 1px,
+          transparent 44px
+        );
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(142,175,212,0.6);
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 36px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+
+    .hero-title {
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-title .line-1 { display: block; }
+    .hero-title .line-2 {
+      display: block;
+      padding-left: clamp(2rem, 8vw, 7rem);
+      font-style: italic;
+      color: var(--silver);
+    }
+    .hero-title .line-3 { display: block; }
+
+    .hero-desc {
+      font-size: clamp(0.85rem, 1.4vw, 0.98rem);
+      font-weight: 300;
+      line-height: 1.95;
+      color: rgba(240,237,230,0.42);
+      max-width: 420px;
+      margin-bottom: 3rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      right: clamp(24px,5vw,80px);
+      bottom: 10vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+      color: rgba(240,237,230,0.2);
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-bar {
+      width: 1px;
+      height: 70px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.25; transform: scaleY(0.6); transform-origin: top; }
+      50%       { opacity: 0.7;  transform: scaleY(1);   transform-origin: top; }
+    }
+
+    /* Piano keys bottom decoration */
+    .hero-keys-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      display: flex;
+      align-items: flex-start;
+      z-index: 1;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .hkb-white {
+      flex: 1;
+      height: 80px;
+      border-right: 1px solid rgba(240,237,230,0.15);
+      background: var(--ivory);
+      min-width: 0;
+    }
+
+    /* FEATURE GRID */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: rgba(142,175,212,0.06);
+    }
+
+    .feature-card {
+      background: var(--black);
+      padding: 52px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 0% 100%, rgba(142,175,212,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .feature-card:hover { background: var(--black2); }
+    .feature-card:hover::before { opacity: 1; }
+
+    .fc-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 400;
+      color: rgba(142,175,212,0.09);
+      line-height: 1;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+
+    .fc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--ivory2);
+      margin-bottom: 0.9rem;
+    }
+
+    .fc-text {
+      font-size: 0.8rem;
+      line-height: 1.85;
+      color: rgba(240,237,230,0.38);
+    }
+
+    /* QUOTE */
+    .quote-section {
+      background: var(--black2);
+      text-align: center;
+      padding: clamp(80px,12vh,160px) clamp(32px,8vw,130px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-section::before {
+      content: '"';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 28rem;
+      font-weight: 400;
+      color: rgba(142,175,212,0.025);
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(1.5rem, 3.5vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: rgba(240,237,230,0.8);
+      max-width: 820px;
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-text em {
+      font-style: normal;
+      color: var(--silver);
+      font-weight: 400;
+    }
+
+    .quote-attr {
+      font-size: 0.6rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(240,237,230,0.25);
+    }
+
+    /* PROGRAMS PREVIEW */
+    .programs-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .prog-card {
+      background: var(--black2);
+      border: 1px solid rgba(142,175,212,0.07);
+      border-radius: 2px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .prog-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      transform: scaleX(0);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .prog-card:hover { border-color: rgba(142,175,212,0.18); transform: translateY(-4px); }
+    .prog-card:hover::after { transform: scaleX(1); }
+
+    .pc-icon {
+      font-family: 'Cormorant', serif;
+      font-size: 2.2rem;
+      color: rgba(142,175,212,0.25);
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .pc-level {
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .pc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--ivory2);
+      margin-bottom: 12px;
+    }
+
+    .pc-text {
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: rgba(240,237,230,0.38);
+    }
+
+    /* SECTION SPLIT */
+    .split-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 60vh;
+      align-items: stretch;
+    }
+
+    .split-text {
+      padding: clamp(60px,9vh,120px) clamp(32px,5vw,80px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .split-visual {
+      background: var(--black2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .split-visual-inner {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(6rem, 14vw, 14rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(142,175,212,0.07);
+      text-align: center;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .split-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(240,237,230,0.012) 0px, rgba(240,237,230,0.012) 1px,
+        transparent 1px, transparent 36px
+      );
+    }
+
+    @media (max-width: 800px) {
+      .split-section { grid-template-columns: 1fr; }
+      .split-visual { min-height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor-key"></div>
+<div id="cursor-ripple"></div>
+
+<!-- WAVE -->
+<canvas id="wave-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="index.html">
+    <img src="assets/logo.png" alt="RSM Piano Studio">
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="lessons.html">Lessons</a>
+    <a class="nav-link" href="students.html">Students</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </div>
+  <a class="nav-cta" href="contact.html">Book a Trial</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-divider"></div>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="lessons.html">Lessons</a>
+  <a href="students.html">Students</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- ═══ HERO ════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-keys-bar">
+    <!-- 20 white keys -->
+    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
+    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
+    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
+    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
+    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
+    <div class="hkb-white"></div><div class="hkb-white"></div><div class="hkb-white"></div>
+    <div class="hkb-white"></div><div class="hkb-white"></div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow reveal">Private Piano Instruction · Bay Area, California</p>
+    <h1 class="hero-title display reveal delay-1">
+      <span class="line-1">Where</span>
+      <span class="line-2">Artistry</span>
+      <span class="line-3">Begins.</span>
+    </h1>
+    <p class="hero-desc reveal delay-3">
+      A private studio dedicated to the transformative power of music — for the beginner discovering their first note, and the performer refining their concert voice.
+    </p>
+    <div class="hero-ctas reveal delay-4">
+      <a class="btn-primary" href="contact.html">Begin Your Journey</a>
+      <a class="btn-ghost" href="lessons.html">Explore Programs</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ═══ STATS ════════════════════════════════════ -->
+<div class="stats-row">
+  <div class="stat-item reveal"><div class="stat-num">14+</div><div class="stat-label">Years Teaching</div></div>
+  <div class="stat-item reveal delay-1"><div class="stat-num">300+</div><div class="stat-label">Students Guided</div></div>
+  <div class="stat-item reveal delay-2"><div class="stat-num">48</div><div class="stat-label">Competition Awards</div></div>
+  <div class="stat-item reveal delay-3"><div class="stat-num">6</div><div class="stat-label">Conservatory Placements</div></div>
+</div>
+
+<!-- ═══ FEATURES ════════════════════════════════ -->
+<div class="feature-grid">
+  <div class="feature-card reveal">
+    <div class="fc-num">I</div>
+    <h3 class="fc-title">Personalized Mastery</h3>
+    <p class="fc-text">Every lesson is built around your unique voice, goals, and pace — never a generic curriculum off the shelf.</p>
+  </div>
+  <div class="feature-card reveal delay-1">
+    <div class="fc-num">II</div>
+    <h3 class="fc-title">Classical Foundation</h3>
+    <p class="fc-text">Rooted in the conservatory tradition, we build technique and music theory that lasts a lifetime.</p>
+  </div>
+  <div class="feature-card reveal delay-2">
+    <div class="fc-num">III</div>
+    <h3 class="fc-title">Modern Palette</h3>
+    <p class="fc-text">From Baroque counterpoint to contemporary minimalism — the full landscape of piano literature awaits.</p>
+  </div>
+  <div class="feature-card reveal delay-3">
+    <div class="fc-num">IV</div>
+    <h3 class="fc-title">Performance Ready</h3>
+    <p class="fc-text">Students perform in intimate studio recitals, regional competitions, and community concert series.</p>
+  </div>
+</div>
+
+<!-- ═══ QUOTE ════════════════════════════════════ -->
+<div class="quote-section">
+  <p class="quote-text reveal">"Music is not what I teach — it is what we <em>discover together</em>, one phrase at a time."</p>
+  <p class="quote-attr reveal delay-2">— Rachel S. Morrison, Founder &amp; Director</p>
+</div>
+
+<!-- ═══ PROGRAMS PREVIEW ═════════════════════════ -->
+<section>
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:20px;">
+      <div>
+        <span class="subhead">Featured Programs</span>
+        <h2 class="headline reveal">Your <em>path</em><br>starts here</h2>
+      </div>
+      <a class="btn-ghost reveal" href="lessons.html">All Programs →</a>
+    </div>
+
+    <div class="programs-preview">
+      <div class="prog-card reveal">
+        <div class="pc-icon">♩</div>
+        <div class="pc-level">Ages 5–10</div>
+        <h3 class="pc-title">Young Musician Foundation</h3>
+        <p class="pc-text">Curiosity-led exploration of keys, rhythm, and musical imagination.</p>
+      </div>
+      <div class="prog-card reveal delay-1">
+        <div class="pc-icon">♪</div>
+        <div class="pc-level">Ages 10–18</div>
+        <h3 class="pc-title">Classical Technique Studio</h3>
+        <p class="pc-text">Rigorous technique, theory, and repertoire for the committed student.</p>
+      </div>
+      <div class="prog-card reveal delay-2">
+        <div class="pc-icon">♬</div>
+        <div class="pc-level">Advanced</div>
+        <h3 class="pc-title">Performance Mentorship</h3>
+        <p class="pc-text">Deep score study and stage presence for the conservatory-bound performer.</p>
+      </div>
+      <div class="prog-card reveal delay-3">
+        <div class="pc-icon">𝄞</div>
+        <div class="pc-level">Adults</div>
+        <h3 class="pc-title">Adult Rediscovery</h3>
+        <p class="pc-text">Return to music — or begin for the first time — at your own meaningful pace.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPLIT SECTION ════════════════════════════ -->
+<div class="split-section">
+  <div class="split-visual">
+    <div class="split-visual-inner">RSM</div>
+  </div>
+  <div class="split-text">
+    <span class="subhead">The Studio</span>
+    <h2 class="headline reveal"><em>Excellence</em><br>in every lesson</h2>
+    <div class="line-divider reveal delay-1"></div>
+    <p class="body-text reveal delay-2" style="max-width:420px">
+      RSM Piano Studio was founded on the belief that great teaching is a living art. Rachel S. Morrison brings over fourteen years of private instruction experience — shaped by conservatory training in San Francisco and London — to every single session.
+    </p>
+    <div style="margin-top:2rem" class="reveal delay-3">
+      <a class="btn-text" href="about.html"><span class="btn-line"></span>About Rachel</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PIANO KEYS DIVIDER ════════════════════════ -->
+<div class="keys-divider">
+  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
+  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
+  <div class="key-b"></div><div class="key-w"></div><div class="key-w"></div>
+  <div class="key-b"></div><div class="key-w"></div><div class="key-b"></div>
+  <div class="key-w"></div><div class="key-w"></div><div class="key-b"></div>
+  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
+  <div class="key-b"></div><div class="key-w"></div><div class="key-w"></div>
+  <div class="key-b"></div><div class="key-w"></div><div class="key-b"></div>
+  <div class="key-w"></div><div class="key-w"></div><div class="key-b"></div>
+  <div class="key-w"></div><div class="key-b"></div><div class="key-w"></div>
+  <div class="key-b"></div><div class="key-w"></div>
+</div>
+
+<!-- ═══ CTA STRIP ════════════════════════════════ -->
+<section style="text-align:center;background:var(--black2);padding:clamp(80px,11vh,140px) clamp(24px,5vw,80px)">
+  <span class="subhead">Ready to Begin?</span>
+  <h2 class="headline reveal"><em>One note</em><br>changes everything</h2>
+  <p class="body-text reveal delay-1" style="max-width:380px;margin:1.5rem auto;text-align:center;">
+    Book a complimentary discovery call. No obligation — just a conversation about your musical life.
+  </p>
+  <div style="margin-top:2.5rem" class="reveal delay-2">
+    <a class="btn-primary" href="contact.html">Schedule a Trial Lesson</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <a href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+    </div>
+    <nav class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="lessons.html">Lessons</a>
+      <a href="students.html">Students</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="footer-contact">
+      hello@rsmstudio.com<br>
+      San Francisco Bay Area, CA<br>
+      Mon – Sat · Morning &amp; Evening
+    </div>
+  </div>
+  <p class="footer-copy">© 2025 RSM Piano Studio · All rights reserved · Crafted with care</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
