@@ -209,7 +209,11 @@
     markActive(); initReveals(); handleLinks();
   }
 
-  window.addEventListener('load', () => {
+  // Reveal the page on first load AND whenever it is restored from the
+  // browser's back/forward cache. Internal links fade the body to opacity:0
+  // before navigating; on a Back-button return the page comes out of bfcache
+  // without firing `load`, so without this the restored page stays invisible.
+  window.addEventListener('pageshow', () => {
     document.body.style.opacity = '1';
   });
 
