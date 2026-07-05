@@ -350,7 +350,7 @@
     </div>
     <div class="footer-contact">
       <p class="footer-heading">Studio</p>
-      <p>Rancho Santa Margarita, CA 92688<br><a href="tel:+19492646318">(949) 264-6318</a><br><a href="mailto:rsmpianostudio@gmail.com">rsmpianostudio@gmail.com</a><br>Mon – Sat · Morning &amp; Evening</p>
+      <p>Rancho Santa Margarita, CA 92688<br><a href="tel:+19495253646">(949) 525 3646</a><br><a href="mailto:rsmpianostudio@gmail.com">rsmpianostudio@gmail.com</a><br>Mon – Sat · Morning &amp; Evening</p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -360,12 +360,13 @@
 
 <script src="js/main.js"></script>
 <script>
-  // FAQ accordion
-  document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.faq-q').addEventListener('click', () => {
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
+  // Animate form step dots on input focus
+  const fields = document.querySelectorAll('.form-input, .form-select, .form-textarea');
+  const dots   = document.querySelectorAll('.fs-dot');
+  fields.forEach((f, i) => {
+    f.addEventListener('focus', () => {
+      const step = Math.min(Math.floor(i / Math.max(1, fields.length / dots.length)), dots.length - 1);
+      dots.forEach((d, di) => d.classList.toggle('active', di <= step));
     });
   });
 </script>
