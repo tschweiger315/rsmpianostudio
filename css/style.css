@@ -640,3 +640,33 @@ footer {
 @media (min-width: 769px) {
   .hamburger { display: none !important; }
 }
+
+/* ── MOBILE POLISH ────────────────────────────── */
+@media (max-width: 768px) {
+  html { -webkit-text-size-adjust: 100%; }
+
+  /* Calmer vertical rhythm on phones */
+  section { padding: clamp(54px, 11vw, 90px) 0; }
+
+  /* Stat band → balanced 2×2 grid instead of a tall single column */
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 18px; }
+
+  /* Footer meta line centers cleanly when stacked */
+  .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+}
+
+@media (max-width: 480px) {
+  /* Hero title sized for small screens */
+  .display { font-size: clamp(2.6rem, 12vw, 3.4rem); }
+
+  /* Stack hero CTAs full-width for easy thumb tapping */
+  .hero-btns { flex-direction: column; align-items: stretch; }
+  .hero-btns .btn { width: 100%; justify-content: center; }
+
+  /* Keep large stat numbers from crowding their labels */
+  .stat-num  { font-size: clamp(2.3rem, 13vw, 3rem); }
+  .stat-grid { gap: 26px 14px; }
+
+  /* Comfortable edge gutters */
+  .container { padding: 0 20px; }
+}

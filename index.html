@@ -11,6 +11,7 @@
     .hero {
       position: relative;
       min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       align-items: flex-end;
       overflow: hidden;
@@ -421,7 +422,7 @@
 <!-- ══ NAV ══════════════════════════════════════ -->
 <nav id="navbar">
   <a class="nav-logo" href="index.html">
-    <img src="assets/logo.png" alt="RSM Piano Studio">
+    <img decoding="async" src="assets/logo.png" alt="RSM Piano Studio">
   </a>
   <div class="nav-links">
     <a class="nav-link" href="index.html">Home</a>
@@ -447,7 +448,7 @@
 <!-- ══ HERO ═════════════════════════════════════ -->
 <section class="hero flush">
   <div class="hero-image">
-    <img
+    <img loading="eager" fetchpriority="high" decoding="async"
       src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=1800&q=85&auto=format&fit=crop"
       alt="Piano keys"
     >
@@ -498,7 +499,7 @@
 <!-- ══ ABOUT PREVIEW ════════════════════════════ -->
 <div class="about-split">
   <div class="about-img-col reveal-left" style="overflow:hidden;">
-    <img
+    <img loading="lazy" decoding="async"
       src="assets/profile.jpeg"
       alt="Tanya's profile picture"
       style="width:110%; height:120%; object-fit:cover; object-position:left top;"
@@ -523,20 +524,20 @@
 <!-- ══ PHOTO BAND ════════════════════════════════ -->
 <div class="photo-band">
   <div class="pb-item">
-    <img
+    <img loading="lazy" decoding="async"
       src="https://images.unsplash.com/photo-1552422535-c45813c61732?w=900&q=85&auto=format&fit=crop&crop=top"
       alt="Grand piano"
     >
   </div>
   <div class="pb-item">
-    <img
+    <img loading="lazy" decoding="async"
       src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=700&q=80&auto=format&fit=crop"
       alt="Sheet music"
     >
   </div>
   <div class="pb-item">
-    <img
-      src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80&auto=format&fit=crop"
+    <img loading="lazy" decoding="async"
+      src="assets/IMG_9959_2.jpeg"
       alt="Piano lesson"
     >
   </div>
@@ -586,29 +587,29 @@
     </div>
     <div class="programs-grid">
 
-      <div class="prog-card card-3d reveal">
+      <a class="prog-card card-3d reveal" href="lessons.html" style="display:block;color:inherit;text-decoration:none">
         <div class="prog-card-img">
-          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&q=80&auto=format&fit=crop" alt="Beginning piano student">
+          <img loading="lazy" decoding="async" src="assets/IMG_2834.jpeg" alt="Beginning piano student">
         </div>
         <div class="prog-card-body">
           <p class="prog-level">Beginners &amp; Adults</p>
           <h3 class="prog-title">Foundational Path</h3>
           <p class="prog-desc">A rigorous yet warm introduction to the joy of classical repertoire — music literacy, technique, and ear training.</p>
-          <a class="prog-price" href="lessons.html" style="font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none">Explore Path →</a>
+          <span class="prog-price" style="display:inline-block;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none">Explore Path →</span>
         </div>
-      </div>
+      </a>
 
-      <div class="prog-card card-3d reveal d1">
+      <a class="prog-card card-3d reveal d1" href="lessons.html" style="display:block;color:inherit;text-decoration:none">
         <div class="prog-card-img">
-          <img src="https://images.unsplash.com/photo-1598128558393-70ff21433be0?w=600&q=80&auto=format&fit=crop&crop=top" alt="Concert pianist performing">
+          <img loading="lazy" decoding="async" src="assets/IMG_0011.JPG" alt="Concert pianist performing">
         </div>
         <div class="prog-card-body">
           <p class="prog-level">Pre-College &amp; Conservatory</p>
           <h3 class="prog-title">Conservatory Track</h3>
           <p class="prog-desc">Elite preparation for pre-college and conservatory auditions — virtuosic repertoire, competition strategy, and audition coaching.</p>
-          <a class="prog-price" href="lessons.html" style="font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none">Explore Track →</a>
+          <span class="prog-price" style="display:inline-block;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none">Explore Track →</span>
         </div>
-      </div>
+      </a>
 
     </div>
   </div>
@@ -627,7 +628,7 @@
     </div>
     <div class="reveal d2">
       <div class="stat-num">2</div>
-      <div class="stat-label">Degrees · U. of Redlands</div>
+      <div class="stat-label">Music Degrees</div>
     </div>
     <div class="reveal d3">
       <div class="stat-num">MTAC</div>
@@ -670,7 +671,7 @@
 <!-- ══ CTA BAND ══════════════════════════════════ -->
 <div class="cta-band">
   <div class="cta-band-bg">
-    <img
+    <img loading="lazy" decoding="async"
       src="https://images.unsplash.com/photo-1585891685952-b30b6c4a03e3?w=1600&q=80&auto=format&fit=crop&crop=center"
       alt="Piano close up"
     >
@@ -678,7 +679,7 @@
   <div class="cta-band-content">
     <span class="subhead reveal">Begin Today</span>
     <h2 class="headline reveal d1">Your first lesson<br>is <em>on us</em></h2>
-    <p class="reveal d2">Book a complimentary trial lesson — no commitment, just music. Let's find out what you're capable of.</p>
+    <p class="reveal d2">Book a complimentary trial lesson — no commitment, just music.</p>
     <div class="reveal d3">
       <a class="btn btn-gold" href="contact.html">Claim Your Free Trial</a>
     </div>
@@ -689,7 +690,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-logo">
-  <a href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+  <a href="index.html"><img decoding="async" src="assets/logo.png" alt="RSM Piano Studio"></a>
       <p class="footer-tagline">"Where every student finds their musical voice."</p>
     </div>
     <div>

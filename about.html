@@ -232,7 +232,7 @@
 <div class="menu-backdrop" id="menu-backdrop"></div>
 
 <nav id="navbar">
-  <a class="nav-logo" href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+  <a class="nav-logo" href="index.html"><img decoding="async" src="assets/logo.png" alt="RSM Piano Studio"></a>
   <div class="nav-links">
     <a class="nav-link" href="index.html">Home</a>
     <a class="nav-link active" href="about.html">About</a>
@@ -256,7 +256,7 @@
   <div class="page-hero-inner">
     <div class="about-image-main reveal-left">
       <div class="aim-frame">
-        <img
+        <img loading="eager" fetchpriority="high" decoding="async"
           src="assets/IMG_9968.jpg"
           alt="Pianist at the piano"
         >
@@ -321,7 +321,7 @@
   <div class="container">
     <div class="cred-layout">
       <div class="cred-image reveal-left">
-        <img
+        <img loading="lazy" decoding="async"
           src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=800&q=85&auto=format&fit=crop"
           alt="Piano keys detail"
         >
@@ -369,7 +369,7 @@
 <!-- ══ TIMELINE ═══════════════════════════════════ -->
 <section class="timeline-section">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,7vw,100px);align-items:start">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(40px,7vw,100px);align-items:start">
       <div>
         <span class="subhead reveal">Journey</span>
         <h2 class="headline reveal d1"><em>Milestones</em><br>along the way</h2>
@@ -421,7 +421,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-logo">
-      <a href="index.html"><img src="assets/logo.png" alt="RSM Piano Studio"></a>
+      <a href="index.html"><img decoding="async" src="assets/logo.png" alt="RSM Piano Studio"></a>
       <p class="footer-tagline">"Where every student finds their musical voice."</p>
     </div>
     <div>
