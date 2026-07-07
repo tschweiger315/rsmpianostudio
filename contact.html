@@ -176,6 +176,19 @@
       color: var(--warm-mid);
     }
 
+    #form-error {
+      display: none;
+      margin-top: 20px;
+      background: rgba(164,70,44,0.08);
+      border: 1.5px solid rgba(164,70,44,0.35);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-family: 'EB Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: #8a3d24;
+    }
+
     /* MINI REVIEW */
     .contact-review {
       margin-top: 48px;
@@ -363,6 +376,10 @@
           ♩ &nbsp;Thank you! Tanya will personally reply within 24 hours with next steps.
         </div>
 
+        <div id="form-error">
+          Something went wrong sending your message. Please try again, or email us directly at <a href="mailto:rsmpianostudio@gmail.com" style="color:#8a3d24">rsmpianostudio@gmail.com</a>.
+        </div>
+
       </form>
     </div>
 
@@ -415,6 +432,73 @@
       dots.forEach((d, di) => d.classList.toggle('active', di <= step));
     });
   });
+</script>
+
+<!-- ══ EMAILJS — CONTACT FORM ═══════════════════ -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  (function () {
+    'use strict';
+
+    // ── EmailJS config ──────────────────────────
+    var EMAILJS_PUBLIC_KEY        = '5DiGpMvfByWTSfqcP';
+    var EMAILJS_SERVICE_ID        = 'service_728e7wr';
+    var EMAILJS_TEMPLATE_NOTIFY   = 'template_heje5fo'; // sends the inquiry to the studio
+    var EMAILJS_TEMPLATE_CONFIRM  = 'template_zsis6vi'; // sends the confirmation to the customer
+
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+    var form    = document.getElementById('contact-form');
+    var success = document.getElementById('form-success');
+    var errorEl = document.getElementById('form-error');
+    if (!form) return;
+
+    var btn = form.querySelector('button[type=submit]');
+    var btnDefaultText = btn ? btn.textContent : '';
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (success) success.style.display = 'none';
+      if (errorEl) errorEl.style.display = 'none';
+
+      var firstName = document.getElementById('f-name').value.trim();
+      var lastName  = document.getElementById('f-last').value.trim();
+      var email     = document.getElementById('f-email').value.trim();
+      var level     = document.getElementById('f-level').value || 'Not specified';
+      var message   = document.getElementById('f-message').value.trim() || 'No message provided.';
+
+      var params = {
+        from_name:  (firstName + ' ' + lastName).trim(),
+        first_name: firstName,
+        last_name:  lastName,
+        from_email: email,
+        reply_to:   email,
+        level:      level,
+        message:    message,
+        to_email:   email
+      };
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      // Notify the studio first — this is the send that matters most.
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_NOTIFY, params)
+        .then(function () {
+          if (success) success.style.display = 'block';
+          if (btn) { btn.textContent = 'Message Sent ✦'; btn.style.background = '#5a8a5a'; }
+          form.reset();
+
+          // Fire-and-forget: send the customer's confirmation email.
+          // Doesn't block the success state — the studio was already notified.
+          emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRM, params)
+            .catch(function (err) { console.warn('Confirmation email failed to send:', err); });
+        })
+        .catch(function (err) {
+          console.error('EmailJS send failed:', err);
+          if (errorEl) errorEl.style.display = 'block';
+          if (btn) { btn.disabled = false; btn.textContent = btnDefaultText; }
+        });
+    });
+  })();
 </script>
 </body>
 </html>

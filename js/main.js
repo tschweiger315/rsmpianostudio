@@ -190,18 +190,6 @@
     });
   }
 
-  /* ── FORM SUCCESS ────────────────────────────── */
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const msg = document.getElementById('form-success');
-      const btn = form.querySelector('button[type=submit]');
-      if (btn) { btn.textContent = 'Message Sent ✦'; btn.style.background = '#5a8a5a'; btn.disabled = true; }
-      if (msg) { msg.style.display = 'block'; }
-    });
-  }
-
   /* ── INIT ────────────────────────────────────── */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => { markActive(); initReveals(); handleLinks(); });
